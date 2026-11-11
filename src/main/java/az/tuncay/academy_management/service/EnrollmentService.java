@@ -6,6 +6,7 @@ import az.tuncay.academy_management.entity.Course;
 import az.tuncay.academy_management.entity.Enrollment;
 import az.tuncay.academy_management.entity.Student;
 import az.tuncay.academy_management.enums.EnrollmentStatus;
+import az.tuncay.academy_management.exception.ResourceNotFoundException;
 import az.tuncay.academy_management.mapper.EnrollmentMapper;
 import az.tuncay.academy_management.repository.EnrollmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +25,14 @@ public class EnrollmentService {
 
     private void checkDuplicateEnrollment(Long studentId, Long courseId){
         if (enrollmentRepository.existsByStudent_IdAndCourse_Id(studentId, courseId)) {
-            throw new RuntimeException("Student is already enrolled in this course");
+            throw new ResourceNotFoundException("Student is already enrolled in this course");
         }
     }
 
     private Enrollment findEnrollmentEntityById(Long id) {
         return enrollmentRepository.
                 findById(id).
-                orElseThrow(() -> new RuntimeException("Enrollment not found"));
+                orElseThrow(() -> new ResourceNotFoundException("Enrollment not found"));
     }
 
     public EnrollmentResponseDto createEnrollment(EnrollmentRequestDto dto){

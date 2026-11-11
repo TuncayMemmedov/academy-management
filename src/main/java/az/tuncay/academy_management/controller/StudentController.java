@@ -4,6 +4,7 @@ import az.tuncay.academy_management.dto.StudentRequestDto;
 import az.tuncay.academy_management.dto.StudentResponseDto;
 import az.tuncay.academy_management.entity.Student;
 import az.tuncay.academy_management.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping
-    public StudentResponseDto createStudent(@RequestBody StudentRequestDto dto){
+    public StudentResponseDto createStudent(@RequestBody @Valid StudentRequestDto dto){
         return studentService.createStudent(dto);
     }
 

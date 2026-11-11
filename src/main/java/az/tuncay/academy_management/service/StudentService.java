@@ -3,6 +3,7 @@ package az.tuncay.academy_management.service;
 import az.tuncay.academy_management.dto.StudentRequestDto;
 import az.tuncay.academy_management.dto.StudentResponseDto;
 import az.tuncay.academy_management.entity.Student;
+import az.tuncay.academy_management.exception.ResourceNotFoundException;
 import az.tuncay.academy_management.mapper.StudentMapper;
 import az.tuncay.academy_management.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class StudentService {
     public Student getStudentById(Long id){
         return studentRepository.
                 findById(id).
-                orElseThrow(() -> new RuntimeException("not found"));
+                orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 
     public StudentResponseDto createStudent(StudentRequestDto dto){

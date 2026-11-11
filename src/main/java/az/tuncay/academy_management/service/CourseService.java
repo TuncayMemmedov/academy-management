@@ -3,7 +3,7 @@ package az.tuncay.academy_management.service;
 import az.tuncay.academy_management.dto.CourseRequestDto;
 import az.tuncay.academy_management.dto.CourseResponseDto;
 import az.tuncay.academy_management.entity.Course;
-import az.tuncay.academy_management.entity.Enrollment;
+import az.tuncay.academy_management.exception.ResourceNotFoundException;
 import az.tuncay.academy_management.mapper.CourseMapper;
 import az.tuncay.academy_management.repository.CourseRepository;
 import az.tuncay.academy_management.repository.EnrollmentRepository;
@@ -25,7 +25,7 @@ public class CourseService {
 
         return courseRepository.
                 findById(id).
-                orElseThrow(() -> new RuntimeException("not found"));
+                orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 
     public CourseResponseDto createCourse(CourseRequestDto dto){
@@ -59,7 +59,7 @@ public class CourseService {
 
         if (enrollmentRepository.existsByCourse_Id(id)){
 
-            throw new RuntimeException("Cannot delete course because enrollments exist");
+            throw new ResourceNotFoundException("Cannot delete course because enrollments exist");
         }else {
 
             Course course = getCourseById(id);
